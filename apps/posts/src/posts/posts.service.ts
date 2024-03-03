@@ -8,12 +8,12 @@ import { PostsRepository } from './repository/posts.repository';
 export class PostsService {
   constructor(private readonly postsRepository: PostsRepository) {}
 
-  async create(createPostDto: CreatePostDto) {
-    return this.postsRepository.create(createPostDto);
+  async create(createPostDto: CreatePostDto, userId: string) {
+    return this.postsRepository.create({ ...createPostDto, userId });
   }
 
   async findAll() {
-    return this.postsRepository.find({});
+    return this.postsRepository.find({ deletedAt: null });
   }
 
   async findOne(_id: string) {
@@ -28,6 +28,9 @@ export class PostsService {
   }
 
   remove(_id: string) {
-    return this.postsRepository.findOneAndDelete({ _id });
+    return this.postsRepository.findOneAndUpdate(
+      { _id },
+      { $set: { deletedAt: Date.now() } },
+    );
   }
 }

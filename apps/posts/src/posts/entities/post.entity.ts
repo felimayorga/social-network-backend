@@ -2,7 +2,7 @@ import { AbstractDocument } from '@app/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
 
-@Schema({ versionKey: false, timestamps: true, collection: 'posts' })
+@Schema({ versionKey: false, timestamps: true })
 export class Post extends AbstractDocument {
   @Prop({ required: true })
   title: string;
@@ -17,7 +17,7 @@ export class Post extends AbstractDocument {
   deletedAt?: Date;
 
   @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-  user: any;
+  userId: string;
 }
 
 export const PostSchema = SchemaFactory.createForClass(Post);
