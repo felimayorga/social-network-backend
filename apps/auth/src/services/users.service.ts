@@ -20,14 +20,14 @@ export class UsersService {
 
   async update(_id: string, updateUserDto: UpdateUserDto) {
     return this.userRepository.findOneAndUpdate(
-      { _id },
+      { _id, deletedAt: null },
       { $set: updateUserDto },
     );
   }
 
   async remove(_id: string) {
     return this.userRepository.findOneAndUpdate(
-      { _id },
+      { _id, deletedAt: null },
       { $set: { deletedAt: Date.now() } },
     );
   }

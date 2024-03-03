@@ -17,19 +17,19 @@ export class PostsService {
   }
 
   async findOne(_id: string) {
-    return this.postsRepository.findOne({ _id });
+    return this.postsRepository.findOne({ _id, deletedAt: null });
   }
 
   async update(_id: string, updatePostDto: UpdatePostDto) {
     return this.postsRepository.findOneAndUpdate(
-      { _id },
+      { _id, deletedAt: null },
       { $set: updatePostDto },
     );
   }
 
   remove(_id: string) {
     return this.postsRepository.findOneAndUpdate(
-      { _id },
+      { _id, deletedAt: null },
       { $set: { deletedAt: Date.now() } },
     );
   }
